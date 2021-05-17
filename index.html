@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
   <link rel="stylesheet" href="style.css">
-  
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
   <title>Frontend Mentor | IP Address Tracker</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+ 
 </head>
 <body>
 
@@ -22,49 +28,123 @@
 
     <div class="search-bar">
       <div class="input">
-        <input type="text" placeholder="Search for any IP address or domain"></input>
+        <input id="address" type="text" placeholder="Search for any IP address or domain"></input>
       </div>
-      <div class="button"></div>
+      <button id="btn" class="button" onclick="where()">
+        <img src="images/icon-arrow.svg">
+      </button>
 
     </div>
 
     <div class="Information">
       <div class="info-detail">
-        <p>IP ADDRESS</p> 
+        <div>
+          <p>IP ADDRESS</p>
+          <div id="ip"></div>
+        </div>
 
       </div>
       <div class="info-detail">
-        <p>LOCATION</p> 
-        
+        <div>
+          <p>LOCATION</p>
+          <div id="location"></div>
+        </div>
+
       </div>
       <div class="info-detail">
-        <p>TIMEZONE</p> 
-        
+
+        <div>
+          <p>TIMEZONE</p>
+          <div id="timezone"></div>
+
+        </div>
+
       </div>
       <div class="info-detail">
-        <p>ISP</p> 
-        
+        <div>
+          <p>ISP</p>
+          <div id="isp"></div>
+        </div>
       </div>
-    
+
     </div>
 
+
+
   </div>
 
-  
-  
 
-  
-  IP Address
-      Location
-      Timezone
-        UTC <!-- add offset value dynamically using the API -->
-      ISP
+  <div id="mapid">
 
-  
-  
+  </div>
+
+
+
+  <script>
+
+    var mymap = null;
+
+    function where() {
+
+      var address = document.getElementById('address').value;
+      console.log(address);
+      const result = fetch('https://geo.ipify.org/api/v1?apiKey=at_HVCX19hw8YfxMBCplqPznCijNts8z&ipAddress=' + address, {
+        mode: 'cors',
+      }).then(result => {
+        return result.json();
+      }).then(data => {
+        console.log('what is data', data);
+
+        if (mymap !== undefined && mymap !== null) {
+          mymap.remove(); // should remove the map from UI and clean the inner children of DOM element
+          console.log(mymap); // nothing should actually happen to the value of mymap
+        }
+
+        mymap = L.map('mapid');
+        mymap.setView([data.location.lat, data.location.lng], 13);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5kcmVhc3JvYmVydCIsImEiOiJja29zaDlwYnEwMWdzMnhueXFoYWY4eGp0In0.SI__0auC6wTFORc8VmCEgg', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'your.mapbox.access.token'
+        }).addTo(mymap);
+
+        document.getElementById("ip").innerHTML = data.ip;
+        document.getElementById("location").innerHTML = data.location.region + ", " + data.location.city;
+        document.getElementById("timezone").innerHTML = "UTC " + data.location.timezone;
+        document.getElementById("isp").innerHTML = data.isp;
+
+
+      })
+
+    }
+
+
+    var input = document.getElementById("address");
+
+    input.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("btn").click();
+      }
+    });
+  </script>
+
+
+
+
+
+  <!-- add offset value dynamically using the API -->
+
+
+
   <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Andreas Robert Pitoy</a>.
   </div>
 </body>
+
 </html>

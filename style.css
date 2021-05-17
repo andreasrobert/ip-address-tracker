@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
 
 body{
-    background-color: aqua;
+    background-color: rgb(245, 245, 245);
     margin: 0;
     font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    height: 100%;
 }
 
 header{
@@ -15,11 +17,20 @@ header{
     ;
 }
 
+p{
+    color :hsl(0, 0%, 59%);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
 .container{
     display: flex;
     flex-direction: column;
     background-image: url(/images/pattern-bg.png);
-    height: 300px;
+    height: 250px;
     background-size: cover;
     /* justify-content: center; */
     align-items: center;
@@ -29,10 +40,11 @@ header{
 .Information{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: white;
-    height: 100px;
+    height: 90px;
     width: 900px;
-    margin: 220px auto 0;
+    margin: 170px auto 0;
     position: absolute;
     border-radius: 16px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -46,6 +58,13 @@ header{
 .info-detail {
     width: 200px;
     padding-left: 17px;
+    height: 70px;
+    
+}
+
+.info-detail > div {
+    margin-top: -25px;
+    height: 200px;
 }
 
 .search-bar{
@@ -62,9 +81,10 @@ header{
 .button{
     background-color: hsl(0, 0%, 17%);
     height: 100%;
-    width: 45px;
+    width: 47px;
     border-top-right-radius: 9px ;
     border-bottom-right-radius: 9px ;
+    border: none;
     
 }
 
@@ -76,3 +96,21 @@ input {
     border: none !important;
     width: 350px;
 }
+
+#mapid { 
+    height: 800px;
+    z-index: -1;
+ }
+
+input:focus{
+    outline: none;
+}
+
+.attribution {
+    font-size: 11px;
+    text-align: center;
+  }
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+  }
