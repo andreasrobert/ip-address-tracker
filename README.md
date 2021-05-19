@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b0759db5-80fc-4c7a-a986-8d5ef11c99e5/deploy-status)](https://app.netlify.com/sites/priceless-pasteur-00c896/deploys)
+
 # Frontend Mentor - IP address tracker
 
 ![Design preview for the IP address tracker coding challenge](./design/desktop-preview.jpg)
